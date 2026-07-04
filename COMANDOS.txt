@@ -1,8 +1,9 @@
-COMANDOS:
+VERCEL:
+Root Directory: ./
 
-cd server
-npm install
-npm start
+RENDER:
+Root Directory: server
+Build Command: npm install
+Start Command: npm start
 
-Depois abra:
-client/index.html
+Depois coloque a URL do Render em config.js

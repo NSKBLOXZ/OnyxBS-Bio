@@ -1,29 +1,20 @@
-# OnyxBS Bio V12.3 Final Polish
+# OnyxBS Bio V14 Final Biker Code
 
-Versão final com ajustes pequenos:
+Versão final usando a imagem Biker.png como fundo.
 
-- Fundo da moto mais visível no centro
-- Cards com glass mais refinado
-- Botões shuffle/repeat menos azuis e mais neutros
-- Ícones sociais um pouco maiores
-- Título "Melhores Amigos" com espaçamento melhor
-- Player preservado no mesmo tamanho
-- Layout mantido exatamente como estava
+- Fundo 16:9 sem bordas pretas
+- Frontend na raiz para Vercel
+- Backend em `server/` para Render
+- Player, amigos, ícones e visual preservados
 
-## Rodar backend
+## Vercel
 
-```bash
-cd server
-npm install
-npm start
-```
+Root Directory: `./`
 
-## Abrir site
+## Render
 
-Abra:
+Root Directory: `server`
+Build Command: `npm install`
+Start Command: `npm start`
 
-```txt
-client/index.html
-```
-
-ou use Live Server.
+Depois coloque a URL do Render em `config.js`.
