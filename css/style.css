@@ -609,3 +609,43 @@ footer{
     transform:scale(1.06) !important;
   }
 }
+@media (max-width: 768px) {
+  body {
+    cursor: auto !important;
+  }
+
+  .custom-cursor,
+  .cursor-glow,
+  .grain,
+  .dynamic-light,
+  .light-layer {
+    display: none !important;
+  }
+
+  .bg-image {
+    filter: grayscale(1) brightness(.62) contrast(1.05) !important;
+    transform: none !important;
+  }
+
+  .card {
+    backdrop-filter: none !important;
+    box-shadow: 0 12px 32px rgba(0,0,0,.35) !important;
+  }
+
+  .card::before,
+  .card::after {
+    display: none !important;
+  }
+
+  .avatar-ring {
+    animation: none !important;
+  }
+
+  .equalizer span {
+    animation: none !important;
+  }
+
+  * {
+    transition-duration: .12s !important;
+  }
+}
