@@ -18,7 +18,8 @@ const FRIEND_IDS = [
   "1350457070972829810",
   "1364594710517383239",
   "1170758007014047745",
-  "1189565390142062634"
+  "1189565390142062634",
+  "1282114525730045977"
 ];
 
 const cache = { friends:null, friendsExpiresAt:0, profile:null, profileExpiresAt:0 };
