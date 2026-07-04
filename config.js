@@ -2,4 +2,4 @@
 // Exemplo:
 // window.ONYXBS_API_URL = "https://onyxbs-api.onrender.com";
 
-window.ONYXBS_API_URL = "";
+window.ONYXBS_API_URL = "https://onyxbs-api.onrender.com";
