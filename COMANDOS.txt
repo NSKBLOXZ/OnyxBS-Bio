@@ -1,0 +1,8 @@
+COMANDOS:
+
+cd server
+npm install
+npm start
+
+Depois abra:
+client/index.html

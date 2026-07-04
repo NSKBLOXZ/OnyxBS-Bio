@@ -1,0 +1,3 @@
+Coloque o vídeo em client/assets/background.mp4
+Nome exato: background.mp4
+Se não colocar, o site usa imagem automaticamente.
