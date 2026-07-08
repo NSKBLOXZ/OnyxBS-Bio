@@ -41,7 +41,10 @@ function fallbackAvatar(seed) {
 
 async function getProfile() {
   const now = Date.now();
-  if (cache.profile && now < cache.profileExpiresAt) return cache.profile;
+
+  if (cache.profile && now < cache.profileExpiresAt) {
+    return cache.profile;
+  }
 
   if (!discordReady) {
     return {
@@ -68,9 +71,11 @@ async function getProfile() {
 
     cache.profile = profile;
     cache.profileExpiresAt = now + 1000 * 60 * 30;
+
     return profile;
   } catch (error) {
-    console.error("Erro ao buscar perfil:", error.message);
+    console.error("Erro ao buscar perfil:", error);
+
     return {
       id: PROFILE_ID,
       username: "onyxbs",
@@ -84,7 +89,10 @@ async function getProfile() {
 
 async function getFriends() {
   const now = Date.now();
-  if (cache.friends && now < cache.friendsExpiresAt) return cache.friends;
+
+  if (cache.friends && now < cache.friendsExpiresAt) {
+    return cache.friends;
+  }
 
   if (!discordReady) {
     return FRIEND_IDS.map((id) => ({
@@ -111,7 +119,8 @@ async function getFriends() {
           status: "online"
         };
       } catch (error) {
-        console.error(`Erro ao buscar amigo ${id}:`, error.message);
+        console.error(`Erro ao buscar amigo ${id}:`, error);
+
         return {
           id,
           username: "Amigo",
@@ -126,6 +135,7 @@ async function getFriends() {
 
   cache.friends = friends;
   cache.friendsExpiresAt = now + 1000 * 60 * 30;
+
   return friends;
 }
 
@@ -134,7 +144,7 @@ app.get("/", (req, res) => {
     online: true,
     name: "OnyxBS Bio API",
     discordReady,
-    routes: ["/api/profile", "/api/friends", "/health"]
+    routes: ["/health", "/api/profile", "/api/friends"]
   });
 });
 
@@ -150,7 +160,7 @@ app.get("/api/profile", async (req, res) => {
   try {
     res.json(await getProfile());
   } catch (error) {
-    console.error("Erro na rota /api/profile:", error);
+    console.error("Erro em /api/profile:", error);
     res.status(500).json({ error: "Erro ao buscar perfil." });
   }
 });
@@ -159,46 +169,46 @@ app.get("/api/friends", async (req, res) => {
   try {
     res.json(await getFriends());
   } catch (error) {
-    console.error("Erro na rota /api/friends:", error);
+    console.error("Erro em /api/friends:", error);
     res.status(500).json({ error: "Erro ao buscar amigos." });
   }
 });
 
+app.listen(PORT, () => {
+  console.log(`API rodando na porta ${PORT}`);
+});
+
 client.once(Events.ClientReady, () => {
   discordReady = true;
-  console.log(`✅ Bot online como ${client.user.tag}`);
+  console.log(`Bot online como ${client.user.tag}`);
 });
 
 client.on("error", (error) => {
-  console.error("❌ Erro do Discord:", error);
+  console.error("Erro do Discord:", error);
 });
 
 process.on("unhandledRejection", (error) => {
-  console.error("❌ Unhandled Rejection:", error);
+  console.error("Unhandled Rejection:", error);
 });
 
 process.on("uncaughtException", (error) => {
-  console.error("❌ Uncaught Exception:", error);
-});
-
-// A API sobe imediatamente
-app.listen(PORT, () => {
-  console.log(`🚀 API rodando na porta ${PORT}`);
+  console.error("Uncaught Exception:", error);
 });
 
 const token = process.env.DISCORD_BOT_TOKEN;
 
-if (!token) {
-  console.error("❌ DISCORD_BOT_TOKEN não encontrado!");
+if (!token || token === "COLOQUE_SEU_TOKEN_AQUI") {
+  console.error("DISCORD_BOT_TOKEN não configurado.");
 } else {
-  console.log("🔑 Token encontrado, tentando conectar ao Discord...");
+  console.log("Token encontrado, tentando conectar ao Discord...");
 
   client.login(token)
     .then(() => {
-      console.log("✅ Login solicitado com sucesso.");
+      console.log("Login enviado ao Discord.");
     })
     .catch((error) => {
-      console.error("❌ Erro ao fazer login no Discord:");
+      discordReady = false;
+      console.error("Erro ao fazer login no Discord:");
       console.error(error);
     });
 }
