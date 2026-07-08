@@ -166,33 +166,39 @@ app.get("/api/friends", async (req, res) => {
 
 client.once(Events.ClientReady, () => {
   discordReady = true;
-  console.log(`Bot online como ${client.user.tag}`);
+  console.log(`✅ Bot online como ${client.user.tag}`);
 });
 
 client.on("error", (error) => {
-  console.error("Erro do client Discord:", error.message);
+  console.error("❌ Erro do Discord:", error);
 });
 
 process.on("unhandledRejection", (error) => {
-  console.error("Unhandled rejection:", error);
+  console.error("❌ Unhandled Rejection:", error);
 });
 
 process.on("uncaughtException", (error) => {
-  console.error("Uncaught exception:", error);
+  console.error("❌ Uncaught Exception:", error);
 });
 
-// A API precisa subir imediatamente para o Render não reiniciar o serviço.
+// A API sobe imediatamente
 app.listen(PORT, () => {
-  console.log(`API rodando na porta ${PORT}`);
+  console.log(`🚀 API rodando na porta ${PORT}`);
 });
 
 const token = process.env.DISCORD_BOT_TOKEN;
 
-if (!token || token === "COLOQUE_SEU_TOKEN_AQUI") {
-  console.error("ERRO: DISCORD_BOT_TOKEN não configurado. A API continuará online, mas o Discord ficará offline.");
+if (!token) {
+  console.error("❌ DISCORD_BOT_TOKEN não encontrado!");
 } else {
-  client.login(token).catch((error) => {
-    discordReady = false;
-    console.error("Erro ao fazer login no Discord:", error.message);
-  });
+  console.log("🔑 Token encontrado, tentando conectar ao Discord...");
+
+  client.login(token)
+    .then(() => {
+      console.log("✅ Login solicitado com sucesso.");
+    })
+    .catch((error) => {
+      console.error("❌ Erro ao fazer login no Discord:");
+      console.error(error);
+    });
 }
